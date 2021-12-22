@@ -7,11 +7,11 @@ import moment from 'moment';
       const handleOk = () => {
          props.setIsModalVisible(false);
       };
-    
+
       const handleCancel = () => {
         props.setIsModalVisible(false);
       };
-  
+
     return (
       <>
         <Modal title="Form Information" visible={props.isModalVisible} onOk={handleOk} onCancel={handleCancel}>
@@ -22,8 +22,8 @@ import moment from 'moment';
             <p>Phone #: {props.data.phone}</p>
             <p>Phone #: {props.data.cnic}</p>
             <p>Gender: {props.data.gender}</p>
-            <p>City: {props.data.city} </p>  
-            
+            <p>City: {props.data.city} </p>
+
         </Modal>
       </>
     );
