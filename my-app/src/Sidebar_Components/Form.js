@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import 'antd/dist/antd.css';
 import { Form, Input, Select, Button, Radio, DatePicker} from 'antd';
 //import moment from 'moment';
@@ -27,7 +27,7 @@ function SignUpForm(props){
             }
         }, []);
    
-    const displayValues = (formInput) => { 
+    const displayValues =  useCallback((formInput) => { 
         const values={
             ...formInput,
         }
@@ -35,12 +35,13 @@ function SignUpForm(props){
         setLoaderMsg(false);
         setSubmitAlertMsg(true);
         showModal();
-    }  
+    }, [formInfo]);
+
      let [isModalVisible, setIsModalVisible] = useState(false);
-     let showModal = (props) => {
+     let showModal = useCallback((props) => {
           isModalVisible = !isModalVisible;
           setIsModalVisible(isModalVisible);
-     }
+     }, [isModalVisible]);
 
     return(
     <>

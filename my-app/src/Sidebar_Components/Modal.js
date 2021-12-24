@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Modal } from 'antd';
 import moment from 'moment';
 
     function ModalDisplay(props){
-        const handleOk = () => {
+        const handleOk = useCallback(() => {
         props.setIsModalVisible(false);
         props.setEndMsg("Thank you!");
-      };
+      }, [props.isModalVisible]);
 
-      const handleCancel = () => {
+      const handleCancel = useCallback(() => {
         props.setIsModalVisible(false);
-      };
+      }, [props.isModalVisible]);
 
     return (
       <>
