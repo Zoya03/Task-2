@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import 'antd/dist/antd.css';
 import { Form, Input, Select, Button, Radio, DatePicker} from 'antd';
 //import moment from 'moment';
@@ -10,11 +10,30 @@ const { Option } = Select;
 
 function SignUpForm(props){
     const [formInfo, setFormInfo] = useState({});
+    
+    const [loaderMsg, setLoaderMsg] = useState();
+    const [submitAlertMsg, setSubmitAlertMsg] = useState();
+    const [endMsg, setEndMsg] =useState();
+    
+    
+     useEffect(() => {
+        setLoaderMsg("Welcome to Student Console");
+        //console.log("Welcome to Student Console");
+        setSubmitAlertMsg(false);
+        
+        return()=>{
+            setEndMsg(false);
+            console.log("Component unMounted");
+            }
+        }, []);
+   
     const displayValues = (formInput) => { 
         const values={
             ...formInput,
         }
         setFormInfo((formInput));
+        setLoaderMsg(false);
+        setSubmitAlertMsg(true);
         showModal();
     }  
      let [isModalVisible, setIsModalVisible] = useState(false);
@@ -25,12 +44,16 @@ function SignUpForm(props){
 
     return(
     <>
+    {<h1>{loaderMsg}</h1>}
+    {submitAlertMsg && <h2>Form Submitted successfully</h2>}
+    {endMsg && <h2>Thank you!</h2>}
     <Form  id="regForm" clasName="regForm"  onFinish={displayValues} 
     onFinishFailed={(error ) =>{
         console.log({error});
     }} >
         <Form.Item label="Registration Form"></Form.Item>
         <Form.Item
+        
             name="firstName"
             label="First Name"
             rules={[
@@ -211,7 +234,7 @@ function SignUpForm(props){
 
         <Form.Item>
             <Button type="primary" htmlType="submit"  >Register</Button>
-            <ModalDisplay isModalVisible={isModalVisible} data={formInfo} setIsModalVisible={showModal} />
+            <ModalDisplay isModalVisible={isModalVisible} data={formInfo} setEndMsg={(v)=>setEndMsg(v)} setIsModalVisible={showModal} />
         </Form.Item>
     </Form>
     </>

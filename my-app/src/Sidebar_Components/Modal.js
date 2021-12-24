@@ -3,9 +3,9 @@ import { Modal } from 'antd';
 import moment from 'moment';
 
     function ModalDisplay(props){
-      console.log(props)
-      const handleOk = () => {
-         props.setIsModalVisible(false);
+        const handleOk = () => {
+        props.setIsModalVisible(false);
+        props.setEndMsg("Thank you!");
       };
 
       const handleCancel = () => {
@@ -23,7 +23,6 @@ import moment from 'moment';
             <p>Phone #: {props.data.cnic}</p>
             <p>Gender: {props.data.gender}</p>
             <p>City: {props.data.city} </p>
-
         </Modal>
       </>
     );

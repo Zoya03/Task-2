@@ -1,4 +1,5 @@
 import 'antd/dist/antd.css';
+import React, {useState, useEffect} from 'react';
 import { Layout, Menu } from 'antd';
 import './Sidebar_Components/Form.js';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -11,8 +12,15 @@ import SignUpForm from './Sidebar_Components/Form';
 const { Header, Content, Sider } = Layout;
 
 function App(){
-
+    const [loaderMsg, setLoaderMsg] = useState("false");
+   
+    useEffect(() => {
+        setLoaderMsg("Welcome to Student Console");
+    }, []);
+  
 return(
+    <>
+    
     <Layout>
         <Header className="header" style={{padding: 10}}>
             <div className="logo" />
@@ -46,14 +54,14 @@ return(
                             <Route path='/' element={<Home />}/>
                             <Route path='/About' element={<AboutUs />}/>
                             <Route path='/ContactUs' element={<ContactUs />}/>
-                            <Route path='/Form' element={<SignUpForm />}/>
+                            <Route path='/Form' element={<SignUpForm loaderMsg={loaderMsg} />}/>
                         </Route>
                     </Routes>
                 </Content>
             </Layout>
         </Layout>
     </Layout>
-   
+    </>
 );
 }
 export default App;
