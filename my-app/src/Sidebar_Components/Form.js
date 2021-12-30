@@ -1,24 +1,26 @@
 import React, {useState, useEffect, useCallback} from "react";
 import 'antd/dist/antd.css';
 import { Form, Input, Select, Button, Radio, DatePicker} from 'antd';
-//import moment from 'moment';
 import ModalDisplay from "./Modal";
 import "./Form.css";
+import {setformInfo, registerForm} from "../actions/mainActions";
+import {useSelector, useDispatch } from "react-redux";
 
-//const dateFormat = 'YYYY/MM/DD';
+
 const { Option } = Select;
 
 function SignUpForm(props){
-    const [formInfo, setFormInfo] = useState({});
     
     const [loaderMsg, setLoaderMsg] = useState();
     const [submitAlertMsg, setSubmitAlertMsg] = useState();
     const [endMsg, setEndMsg] =useState();
-    
+
+    const formInfo = useSelector((state) => state.formInfo);
+    const dispatch = useDispatch()
+
     
      useEffect(() => {
         setLoaderMsg("Welcome to Student Console");
-        //console.log("Welcome to Student Console");
         setSubmitAlertMsg(false);
         
         return()=>{
@@ -27,28 +29,31 @@ function SignUpForm(props){
             }
         }, []);
    
-    const displayValues =  useCallback((formInput) => { 
-        const values={
-            ...formInput,
-        }
-        setFormInfo((formInput));
-        setLoaderMsg(false);
-        setSubmitAlertMsg(true);
-        showModal();
-    }, [formInfo]);
+    //  const displayValues =(formInfo) => { 
+    //     const values={
+    //          ...formInfo,
+    //      }
+    //      dispatch((values)=>setformInfo());
+    //      //setFormInfo((formInfo));
+    //      setLoaderMsg(false);
+    //      setSubmitAlertMsg(true);
+    //      showModal();
+    //  };
 
+    
      let [isModalVisible, setIsModalVisible] = useState(false);
      let showModal = useCallback((props) => {
           isModalVisible = !isModalVisible;
           setIsModalVisible(isModalVisible);
      }, [isModalVisible]);
 
+
     return(
     <>
     {<h1>{loaderMsg}</h1>}
     {submitAlertMsg && <h2>Form Submitted successfully</h2>}
     {endMsg && <h2>Thank you!</h2>}
-    <Form  id="regForm" clasName="regForm"  onFinish={displayValues} 
+    <Form  id="regForm" clasName="regForm" onFinish={((formInfo)=>dispatch(setformInfo(formInfo)))} 
     onFinishFailed={(error ) =>{
         console.log({error});
     }} >
@@ -66,7 +71,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
         >
-            <Input name="firstName" value={formInfo.firstName} type="text" placeholder="Type your First Name"/>
+            <Input name="firstName" type="text" value={formInfo?.firstName} placeholder="Type your First Name"/>
 
         </Form.Item>
         <Form.Item
@@ -81,7 +86,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
         >
-            <Input name="lastName" value={formInfo.lastName} typetype="text" placeholder="Type your Last Name" />
+            <Input name="lastName" value={formInfo?.lastName} typetype="text" placeholder="Type your Last Name" />
         </Form.Item>
         <Form.Item
             name="email"
@@ -99,7 +104,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
         >
-            <Input name ="email" value={formInfo.email} type="email" placeholder="Enter Email" />
+            <Input name ="email" value={formInfo?.email} type="email" placeholder="Enter Email" />
         </Form.Item>
 
         <Form.Item
@@ -114,8 +119,8 @@ function SignUpForm(props){
             hasFeedback
             >
             <DatePicker
-              value={formInfo.dob}
               style ={{width: "100"}}
+              value={formInfo?.dob}
               name="dob"
               //defaultValue={moment('2015/01/01', dateFormat)}
               //format={dateFormat}
@@ -134,7 +139,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
             >
-            <Input name="phone" value={formInfo.phone} type="number" placeholder="+92 ---------" />
+            <Input name="phone" value={formInfo?.phone} type="number" placeholder="+92 ---------" />
         </Form.Item>
         <Form.Item
             name ="password"
@@ -152,7 +157,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
         >
-            <Input.Password name="password" value={formInfo.password} type="password" placeholder="*****" />
+            <Input.Password name="password" value={formInfo?.password} type="password" placeholder="*****" />
         </Form.Item>
         <Form.Item
             name ="cpaswrd"
@@ -174,7 +179,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
         >
-            <Input.Password name="cpaswrd" value={formInfo.cpaswrd} type="cpaswrd" placeholder="*****"/>
+            <Input.Password name="cpaswrd" value={formInfo?.cpaswrd} type="cpaswrd" placeholder="*****"/>
         </Form.Item>
         <Form.Item
             name="cnic"
@@ -188,7 +193,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
             >
-            <Input  name="cnic" value={formInfo.cnic} type="number" placeholder="---- ------------" />
+            <Input  name="cnic" value={formInfo?.cnic} type="number" placeholder="---- ------------" />
         </Form.Item>
 
         <Form.Item
@@ -203,7 +208,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
             >
-        <Radio.Group name="gender" value={formInfo.gender} type="radio" >
+        <Radio.Group name="gender" value={formInfo?.gender} type="radio" >
             <Radio value={'Male'}>Male</Radio>
             <Radio value={'Female'}>Female</Radio>
             <Radio value={'Other'}>other</Radio>
@@ -223,7 +228,7 @@ function SignUpForm(props){
             ]}
             hasFeedback
              >
-            <Select name="city" value={formInfo.city} placeholder="Select your City">
+            <Select name="city" value={formInfo?.city} placeholder="Select your City">
                 <Option value="Islamabad">Islamabad</Option>
                 <Option value="Lahore">Lahore</Option>
                 <Option value="Karachi">Karachi</Option>
@@ -234,7 +239,7 @@ function SignUpForm(props){
         </Form.Item>
 
         <Form.Item>
-            <Button type="primary" htmlType="submit"  >Register</Button>
+        <Button type="primary" htmlType="submit"  onClick={(e)=>dispatch(registerForm(e))}>Register</Button>
             <ModalDisplay isModalVisible={isModalVisible} data={formInfo} setEndMsg={(v)=>setEndMsg(v)} setIsModalVisible={showModal} />
         </Form.Item>
     </Form>
@@ -242,5 +247,6 @@ function SignUpForm(props){
     );
 
 }
+
 
 export default SignUpForm;

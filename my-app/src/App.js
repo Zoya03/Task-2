@@ -31,7 +31,7 @@ return(
                     style={{ height: '100%', borderRight: 0 }}
                     >
                     <Link to ="/"><Menu.Item key="1">Dashboard</Menu.Item></Link>
-                    <Link to = "'/About'"><Menu.Item key="2">About US</Menu.Item></Link>
+                    <Link to = "/AboutUs"><Menu.Item key="2">About US</Menu.Item></Link>
                     <Link to ="/Form"><Menu.Item key="3">Form</Menu.Item></Link>
                     <Link to ="/ContactUs "> <Menu.Item key="4">Contact</Menu.Item></Link>
                 </Menu>
@@ -47,7 +47,7 @@ return(
                     <Routes>
                         <Route>
                             <Route path='/' element={<Home />}/>
-                            <Route path='/About' element={<AboutUs />}/>
+                            <Route path='/AboutUs' element={<AboutUs />}/>
                             <Route path='/ContactUs' element={<ContactUs />}/>
                             <Route path='/Form' element={<SignUpForm />}/>
                         </Route>

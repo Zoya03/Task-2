@@ -1,6 +1,9 @@
 import React from "react";
 
 function ContactUs(){
-    return <h2>ContactUS</h2>;
+    return(
+        <h1>Contact Section</h1>
+    );
 }
+    
 export default ContactUs;
